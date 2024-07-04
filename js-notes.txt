@@ -1,0 +1,226 @@
+js 
+---es5 -old version
+---es6 - new version
+
+_________________________________________________________
+variables 
+
+diff between var let and const
+
+1. 
+es5 --- var
+es6 --- var(from es5) + let, const
+
+2. 
+var -function scoped -var can be used in parent func anywhere 
+let and const - braces scoped - {}
+
+
+3. var adds  itself to 'window object'
+  let and const does not add it to 'window object'
+
+__________________________________________________________
+
+window? 
+
+it is a box of features provided by browser that js can
+use even though it by default doesn't have those like
+1 alert()
+2. clearinterval()
+3. localstorage  etc
+
+______________________________________________________
+
+browser context api 
+has 3 things
+
+1. window
+2. stack
+3. heap
+
+_______________________________________________________
+
+stack - LIFO  for example 1,2,3 in a list  
+3 was last inserted so it gets out first 
+
+______________________________________________________
+
+heap -  during a calculation the data generated(say the
+temp data) is stored in heap 
+
+so like 
+
+1+2+3 
+when program does 1+2 =3  it stores 3 in heap
+and then it does 3+3 to get to final  answer
+
+_________________________________________________________
+
+execution context 
+
+a container that is created on function call 
+
+it contains
+
+1. variables
+2. functions(if there any in function)
+3. lexical enviroment ( what the function can use so
+like a scope-chart)
+
+so 
+
+function abc(){
+  var a = 10;
+  var b = 12;
+  function ad(){
+     var c = 15;
+  }
+}
+
+so now if abc() is called 
+
+it creates a container that will have
+
+1. variables   a and b 
+2. function   ad()
+
+and a lexical enviroment which just tells that above 
+variables and function are accessible and also tells
+that var c is not accessible because it is in the 
+scope of ad() not abc() 
+
+________________________________________________________
+how to copy array or any reference type in js
+
+a = [1,2,3,4,5]
+b = a    // this is wrong 
+b = [...a]  // this is correct way to copy 
+
+b =[...a]  is same as  b = a.copy()  in python
+
+_________________________________________________________
+
+truthy and falsy
+
+falsy values : 0 false Nan Null undefined document.all
+
+so if any of this  the condition will be false 
+
+like  
+
+if(0){}  will be false
+
+but 
+if(-1){}  will be true
+
+
+________________________________________________________
+
+foreach -- only works on array n only works on copy not real
+
+a = [1,2,3,4,5]
+
+a.forEach(function(val){
+          val =  val+2; })
+
+_________________________________________________________
+
+
+forin -- for looping through objects (or dictionay in python)
+
+obj = {"name" : "habib","age":15}
+
+for(var key in obj){
+  console.log(key," ",obj[key])
+}
+
+
+__________________________________________________________
+callback function 
+
+it is just function that only is executed when it's task
+is done 
+
+so like  get_img_from_fb() function 
+
+now it will be called and then put aside by js until it
+has got the image by making a request
+
+
+example
+
+setTimeout(function(){
+  console.log("now it runs after 2 sec");
+   }, 2000);
+
+in this case this callback is put aside for 2 sec and then
+runs
+
+__________________________________________________________
+
+first class functions
+
+
+functions can be used as a normal value
+
+like
+
+
+function abc(a){
+ a();
+}
+
+
+myfunc = function(){ console.log("hey i was sent as args")};
+abc(myfunc)
+
+___________________________________________________________
+
+how arrays are made behind the scenes
+
+a = []
+
+console.log(typeof a)
+
+"object"  so actually the array is object behind the scene
+
+it  does like this 
+
+if you make 
+
+b = [1,2,3]
+
+js converts it to  
+b = { 0:1,1:2,2:3}
+
+and as we know  index can never be <0  
+
+since it is an object behind the scnee here you can do
+
+b[-1] = 10
+
+Q????
+
+if array is type object and object is also type object
+how do we diff
+
+Ans: Array.isArray([1,2,3])  returns true if array
+_____________________________________________________
+
+how to delete object property
+
+obj = {"name" : "habib","age":15}
+
+delete obj.name
+
+result 
+console.log(obj)
+
+{"age":15}
+
+
+
+________________________________________________________
+
+
+
