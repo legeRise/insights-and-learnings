@@ -123,6 +123,9 @@ a = [1,2,3,4,5]
 a.forEach(function(val){
           val =  val+2; })
 
+so basically, in a.forEach(), forEach() is a function that takes any function() and
+applies that function on each value of array  'a'
+
 _________________________________________________________
 
 
@@ -195,14 +198,13 @@ b = { 0:1,1:2,2:3}
 
 and as we know  index can never be <0  
 
-since it is an object behind the scnee here you can do
+since it is an object behind the scenes here you can do
 
 b[-1] = 10
 
-Q????
 
-if array is type object and object is also type object
-how do we diff
+Q. If array is of type 'object' and object is also type 'object'
+how do we differentiate
 
 Ans: Array.isArray([1,2,3])  returns true if array
 _____________________________________________________
