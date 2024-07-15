@@ -1,6 +1,6 @@
 js 
 ---es5 -old version
----es6 - new version
+---es6 - new version 
 
 _________________________________________________________
 variables 
