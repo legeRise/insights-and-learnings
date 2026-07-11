@@ -23,3 +23,22 @@ So the clean mental model is:
 `STATIC_URL` = the URL prefix used in HTML to access static files, usually `/static/`
 
 This means I should not mix up my working static files with the collected production static files. I write static files in app-level or project-level static folders, and let Django collect them into `STATIC_ROOT` only when needed for production.
+
+3. In my production Django projects, I intentionally keep Django logging simple and send logs only through a `StreamHandler`. I do not attach a Django `FileHandler`, because I do not want every Django or Gunicorn worker handling file writes directly.
+
+The logging flow I use is:
+
+`Django logger -> StreamHandler -> stdout/stderr -> systemd -> log file -> EzLog`
+
+The systemd service redirects `StandardOutput` and `StandardError` to the log file that `legeRise/ezlog` streams. This keeps responsibilities separated: Django creates log records, systemd writes them to the file, logrotate manages file size and rotation, and EzLog reads and displays the file.
+
+Because Django is not writing the file itself, I also do not use Python's `RotatingFileHandler` or `TimedRotatingFileHandler`. Rotation must instead be handled externally, usually with `logrotate`. Adding a Django file handler as well would duplicate file I/O and could cause multiple Gunicorn workers to write to the same file unnecessarily.
+
+So the mental model is:
+
+`StreamHandler` = Django emits logs to the process output  
+`systemd` = captures stdout/stderr and writes the log file  
+`logrotate` = rotates and compresses the log file  
+`EzLog` = streams and displays the log file
+
+This setup is intentional, not naive. A Django file handler would only make sense if Python itself needed to own the log file and no external process manager was already doing that job.
